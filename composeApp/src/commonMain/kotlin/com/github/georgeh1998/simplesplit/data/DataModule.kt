@@ -1,4 +1,4 @@
-package com.github.georgeh1998.simplesplit.di
+package com.github.georgeh1998.simplesplit.data
 
 import SimpleSplit.composeApp.BuildConfig
 import io.github.jan.supabase.auth.Auth
@@ -8,7 +8,7 @@ import io.github.jan.supabase.serializer.KotlinXSerializer
 import kotlinx.serialization.json.Json
 import org.koin.dsl.module
 
-val supabaseModule =
+val dataModule =
     module {
         single {
             createSupabaseClient(BuildConfig.SUPABASE_URL, BuildConfig.SUPABASE_KEY) {
@@ -16,5 +16,8 @@ val supabaseModule =
                 install(Auth)
                 install(Postgrest)
             }
+        }
+        single {
+            SupabaseServiceImpl(get())
         }
     }
