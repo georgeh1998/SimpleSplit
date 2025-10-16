@@ -17,7 +17,7 @@ val dataModule =
                 install(Postgrest)
             }
         }
-        single {
+        single<SupabaseService> {
             SupabaseServiceImpl(get())
         }
     }
