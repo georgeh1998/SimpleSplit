@@ -1,7 +1,20 @@
 package com.github.georgeh1998.simplesplit.data
 
 import io.github.jan.supabase.SupabaseClient
+import io.github.jan.supabase.auth.auth
+import io.github.jan.supabase.auth.providers.builtin.Email
 
 class SupabaseServiceImpl(
     private val supabaseClient: SupabaseClient,
-) : SupabaseService
+) : SupabaseService {
+    override suspend fun signUpWith(
+        signUpEmail: String,
+        signUpPassword: String,
+    ) {
+        val result =
+            supabaseClient.auth.signInWith(Email) {
+                email = signUpEmail
+                password = signUpPassword
+            }
+    }
+}
