@@ -3,7 +3,6 @@ package com.github.georgeh1998.simplesplit.feature.signup
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.github.georgeh1998.simplesplit.repository.UserRepository
-import io.github.jan.supabase.supabaseJson
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update

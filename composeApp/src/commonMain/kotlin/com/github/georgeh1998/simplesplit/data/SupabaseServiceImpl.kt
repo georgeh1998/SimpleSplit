@@ -12,7 +12,7 @@ class SupabaseServiceImpl(
         signUpPassword: String,
     ) {
         val result =
-            supabaseClient.auth.signInWith(Email) {
+            supabaseClient.auth.signUpWith(Email) {
                 email = signUpEmail
                 password = signUpPassword
             }
