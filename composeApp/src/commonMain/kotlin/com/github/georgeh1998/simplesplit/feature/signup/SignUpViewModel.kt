@@ -2,6 +2,7 @@ package com.github.georgeh1998.simplesplit.feature.signup
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.github.georgeh1998.simplesplit.repository.TransactionRepository
 import com.github.georgeh1998.simplesplit.repository.UserRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -10,9 +11,16 @@ import kotlinx.coroutines.launch
 
 class SignUpViewModel(
     private val userRepository: UserRepository,
+    private val transactionRepository: TransactionRepository,
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(SignUpUiState())
     val uiState = _uiState.asStateFlow()
+
+    init {
+        viewModelScope.launch {
+            val a = transactionRepository.getTransactionsByGroupId("")
+        }
+    }
 
     fun onEmailChange(email: String) {
         _uiState.update { it.copy(inputtingEmail = email) }

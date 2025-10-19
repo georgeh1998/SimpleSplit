@@ -7,4 +7,7 @@ val repositoryModule =
         single {
             UserRepository(get())
         }
+        single {
+            TransactionRepository(get())
+        }
     }
