@@ -4,29 +4,30 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewModelScope
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navDeepLink
-import androidx.navigation.toRoute
+import com.github.georgeh1998.simplesplit.feature.app.InitialRoute
 import com.github.georgeh1998.simplesplit.feature.expenseList.ExpenseListScreen
 import com.github.georgeh1998.simplesplit.feature.expenseList.ExpenseListViewModel
 import com.github.georgeh1998.simplesplit.feature.signup.SignUpScreen
 import com.github.georgeh1998.simplesplit.feature.signup.SignUpViewModel
 import com.github.georgeh1998.simplesplit.repository.UserRepository
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
 @Composable
-fun NavRoot() {
+fun NavRoot(startDestination: Route) {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = Route.ExpenseList,
+        startDestination = startDestination,
     ) {
         composable<Route.SignUp> {
             val viewModel: SignUpViewModel = koinInject()
