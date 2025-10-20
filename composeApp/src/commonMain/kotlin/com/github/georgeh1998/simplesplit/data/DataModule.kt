@@ -2,6 +2,7 @@ package com.github.georgeh1998.simplesplit.data
 
 import SimpleSplit.composeApp.BuildConfig
 import io.github.jan.supabase.auth.Auth
+import io.github.jan.supabase.auth.FlowType
 import io.github.jan.supabase.createSupabaseClient
 import io.github.jan.supabase.postgrest.Postgrest
 import io.github.jan.supabase.serializer.KotlinXSerializer
@@ -13,7 +14,9 @@ val dataModule =
         single {
             createSupabaseClient(BuildConfig.SUPABASE_URL, BuildConfig.SUPABASE_KEY) {
                 defaultSerializer = KotlinXSerializer(Json)
-                install(Auth)
+                install(Auth) {
+                    flowType = FlowType.PKCE
+                }
                 install(Postgrest)
             }
         }

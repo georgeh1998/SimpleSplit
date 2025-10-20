@@ -36,23 +36,23 @@ kotlin {
         }
         val commonMain by getting {
             dependencies {
-                implementation(compose.runtime)
-                implementation(compose.foundation)
-                implementation(compose.material3)
-                implementation(compose.ui)
                 implementation(compose.components.resources)
                 implementation(compose.components.uiToolingPreview)
-                implementation(libs.androidx.lifecycle.viewmodelCompose)
+                implementation(compose.foundation)
+                implementation(compose.material3)
+                implementation(compose.runtime)
+                implementation(compose.ui)
                 implementation(libs.androidx.lifecycle.runtimeCompose)
-                implementation(project.dependencies.platform(libs.supabase.bom))
-                implementation(libs.supabase.postgrest)
-
-                implementation(libs.ktor.client.core)
-                implementation(libs.ktor.client.cio)
-
-                implementation(project.dependencies.platform(libs.koin.bom))
-                implementation(libs.koin.core)
+                implementation(libs.androidx.lifecycle.viewmodelCompose)
                 implementation(libs.koin.compose)
+                implementation(libs.koin.core)
+                implementation(libs.kotlinx.serialization.json)
+                implementation(libs.ktor.client.cio)
+                implementation(libs.ktor.client.core)
+                implementation(libs.navigation.compose)
+                implementation(libs.supabase.postgrest)
+                implementation(project.dependencies.platform(libs.koin.bom))
+                implementation(project.dependencies.platform(libs.supabase.bom))
             }
             buildConfig {
                 buildConfigField("String", "SUPABASE_URL", "\"${getLocalProperty("SUPABASE_URL")}\"")

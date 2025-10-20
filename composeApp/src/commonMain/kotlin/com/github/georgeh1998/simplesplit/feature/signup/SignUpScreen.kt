@@ -22,11 +22,12 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import com.github.georgeh1998.simplesplit.ui_component.PrimaryButton
-import org.koin.compose.koinInject
 
 @Composable
-fun SignUpScreen(modifier: Modifier = Modifier) {
-    val viewModel: SignUpViewModel = koinInject()
+fun SignUpScreen(
+    viewModel: SignUpViewModel,
+    modifier: Modifier = Modifier,
+) {
     val uiState by viewModel.uiState.collectAsState()
 
     Scaffold(modifier = modifier.fillMaxSize()) { paddingValues ->
