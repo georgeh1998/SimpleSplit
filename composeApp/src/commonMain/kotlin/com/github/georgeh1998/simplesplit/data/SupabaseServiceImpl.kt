@@ -19,6 +19,7 @@ class SupabaseServiceImpl(
         signUpEmail: String,
         signUpPassword: String,
     ) {
+        supabaseClient.auth.signInAnonymously()
         supabaseClient.auth.signUpWith(
             provider = Email,
             redirectUrl = "simplisplit://georgeh1998-github-com/signUpComplete",
