@@ -4,8 +4,12 @@ data class InitialUiState(
     val action: InitialAction? = null,
 )
 
-enum class InitialAction {
-    ToSignUp,
-    ToWaitingForConfirmation,
-    ToExpanseList,
+sealed interface InitialAction {
+    data object ToSignUp : InitialAction
+
+    data class ToWaitingForConfirmation(
+        val code: String,
+    ) : InitialAction
+
+    data object ToExpanseList
 }

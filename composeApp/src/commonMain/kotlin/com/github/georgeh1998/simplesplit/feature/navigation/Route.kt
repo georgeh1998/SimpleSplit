@@ -10,7 +10,7 @@ sealed interface Route {
     data object SignUp : Route
 
     @Serializable
-    data class SignUpComplete(
+    data class WaitingForConfirmation(
         val code: String,
     ) : Route
 

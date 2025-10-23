@@ -18,6 +18,9 @@ fun InitialScreen(navController: NavController) {
                 InitialAction.ToSignUp -> {
                     navController.navigate(Route.SignUp)
                 }
+                is InitialAction.ToWaitingForConfirmation -> {
+                    navController.navigate(Route.WaitingForConfirmation(action.code))
+                }
                 InitialAction.ToExpanseList -> {
                     navController.navigate(Route.ExpenseList)
                 }
