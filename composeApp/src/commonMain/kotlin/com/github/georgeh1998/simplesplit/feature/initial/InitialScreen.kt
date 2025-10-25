@@ -9,8 +9,10 @@ import com.github.georgeh1998.simplesplit.feature.navigation.Route
 import org.koin.compose.koinInject
 
 @Composable
-fun InitialScreen(navController: NavController) {
-    val viewModel: InitialViewModel = koinInject()
+fun InitialScreen(
+    viewModel: InitialViewModel,
+    navController: NavController
+) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     LaunchedEffect(uiState.action) {
         uiState.action?.let { action ->

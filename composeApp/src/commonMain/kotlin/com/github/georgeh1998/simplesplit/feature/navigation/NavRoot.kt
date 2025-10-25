@@ -10,14 +10,17 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navDeepLink
+import androidx.navigation.toRoute
 import com.github.georgeh1998.simplesplit.feature.expenseList.ExpenseListScreen
 import com.github.georgeh1998.simplesplit.feature.expenseList.ExpenseListViewModel
 import com.github.georgeh1998.simplesplit.feature.initial.InitialScreen
+import com.github.georgeh1998.simplesplit.feature.initial.InitialViewModel
 import com.github.georgeh1998.simplesplit.feature.signup.SignUpScreen
 import com.github.georgeh1998.simplesplit.feature.signup.SignUpViewModel
 import com.github.georgeh1998.simplesplit.feature.waitingConfirmation.WaitingConfirmationScreen
 import com.github.georgeh1998.simplesplit.feature.waitingConfirmation.WaitingConfirmationViewModel
 import com.github.georgeh1998.simplesplit.repository.UserRepository
+import com.github.georgeh1998.simplesplit.util.Log
 import kotlinx.coroutines.launch
 import org.koin.compose.koinInject
 
@@ -26,7 +29,7 @@ fun NavRoot() {
     val navController = rememberNavController()
     NavHost(
         navController = navController,
-        startDestination = Route.Initial,
+        startDestination = Route.Initial(),
     ) {
         composable<Route.Initial>(
             deepLinks =
@@ -35,8 +38,15 @@ fun NavRoot() {
                         this.uriPattern = "simplisplit://georgeh1998-github-com/signUpComplete?code={code}"
                     },
                 ),
-        ) {
-            InitialScreen(navController)
+        ) { navBackStackEntry ->
+            val route = navBackStackEntry.toRoute<Route.Initial>()
+            Log.i("hasegawa", "$route")
+            val viewModel: InitialViewModel = koinInject()
+
+            InitialScreen(
+                viewModel = viewModel,
+                navController = navController,
+            )
         }
         composable<Route.SignUp> {
             val viewModel: SignUpViewModel = koinInject()

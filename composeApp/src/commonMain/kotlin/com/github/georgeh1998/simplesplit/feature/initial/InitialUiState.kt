@@ -11,5 +11,5 @@ sealed interface InitialAction {
         val code: String,
     ) : InitialAction
 
-    data object ToExpanseList
+    data object ToExpanseList: InitialAction
 }

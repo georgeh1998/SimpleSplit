@@ -23,12 +23,20 @@ class InitialViewModel(
                             InitialAction.ToExpanseList
                         }
                         is SessionStatus.NotAuthenticated -> InitialAction.ToSignUp
-                        else -> null
+                        else -> InitialAction.ToWaitingForConfirmation("cod")
                     }
+
                 InitialUiState(action)
             }.stateIn(
                 scope = viewModelScope,
                 started = SharingStarted.WhileSubscribed(5_000),
                 initialValue = InitialUiState(null),
             )
+
+
+    fun init(
+        code: String?
+    ) {
+
+    }
 }
