@@ -4,7 +4,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-SimpleSplit is a Kotlin Multiplatform (KMP) application targeting Android and iOS platforms. The project uses Compose Multiplatform for shared UI code and integrates with Supabase for backend services.
+SimpleSplit is a Kotlin Multiplatform (KMP) application targeting Android and iOS platforms. 
+The project uses Compose Multiplatform for shared UI code and integrates with Supabase for backend services.
+This application allows users to manage group expenses.
 
 ## Architecture
 
