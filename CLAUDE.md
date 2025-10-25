@@ -10,29 +10,7 @@ This application allows users to manage group expenses.
 
 ## Architecture
 
-### Platform Structure
-
-The codebase follows the standard Kotlin Multiplatform structure:
-
-- **composeApp/src/commonMain**: Shared code for all platforms
-  - UI components in `ui_component/`
-  - Theme configuration in `theme/`
-  - Main app entry point in `App.kt`
-- **composeApp/src/androidMain**: Android-specific implementations
-- **composeApp/src/iosMain**: iOS-specific implementations
-- **iosApp/**: iOS application entry point and SwiftUI code (if needed)
-
-### Key Dependencies
-
-- **Compose Multiplatform 1.9.0**: Shared UI framework
-- **Kotlin 2.2.20**: Language version
-- **Supabase 3.2.4**: Backend integration (PostgREST)
-- **Ktor 3.3.0**: HTTP client (platform-specific engines: OkHttp for Android, Darwin for iOS, CIO for common)
-- **Kotlin Serialization**: Enabled for data serialization
-
-### Build Configuration
-
-The project uses Gradle version catalogs (`gradle/libs.versions.toml`) for dependency management. The iOS framework is built as a static framework named "ComposeApp" targeting both iosArm64 (physical devices) and iosSimulatorArm64 (simulators).
+For detailed architecture documentation, see [docs/architecture.md](docs/architecture.md).
 
 ## Build and Development Commands
 
