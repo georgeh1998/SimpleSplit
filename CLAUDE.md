@@ -14,6 +14,8 @@ For detailed architecture documentation, see [docs/architecture.md](docs/archite
 
 For UI (Compose) and ViewModel implementation patterns, see [docs/ui-viewmodel-pattern.md](docs/ui-viewmodel-pattern.md).
 
+For Compose implementation guidelines, see [docs/compose.md](docs/compose.md).
+
 For backend implementation, see [docs/backend.md](docs/backend.md).
 
 ### Testing
