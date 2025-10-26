@@ -15,19 +15,34 @@ feature/sample/
 
 ## SampleScreen.kt
 
-Composable UI that observes state and emits user actions.
+Stateless Composable UI that only receives state and events.
 
 ```kotlin
+fun NavGraphBuilder.sampleScreen(navController: NavController) {
+    composable<Route.Sample> {
+        val viewModel: SampleViewModel = koinInject()
+        val uiState by viewModel.uiState.collectAsState()
+
+        SampleScreen(
+            uiState = uiState,
+            events = viewModel.events,
+            onAction = viewModel::onAction,
+            navController = navController,
+        )
+    }
+}
+
+
 @Composable
-fun SampleScreen(
-    viewModel: SampleViewModel,
+private fun SampleScreen(
+    uiState: SampleUiState,
+    events: Flow<SampleEvent>,
+    onAction: (SampleUserAction) -> Unit,
     navController: NavController,
 ) {
-    val uiState by viewModel.uiState.collectAsState()
-
     // Handle one-shot events
     LaunchedEffect(Unit) {
-        viewModel.events.collect { event ->
+        events.collect { event ->
             when (event) {
                 is SampleEvent.NavigateToDetail -> navController.navigate(Route.Detail(event.id))
                 is SampleEvent.ShowSnackbar -> { /* show snackbar */ }
@@ -38,24 +53,18 @@ fun SampleScreen(
     Column {
         OutlinedTextField(
             value = uiState.inputText,
-            onValueChange = { viewModel.onAction(SampleUserAction.InputTextChanged(it)) },
+            onValueChange = { onAction(SampleUserAction.InputTextChanged(it)) },
             enabled = !uiState.isLoading,
         )
 
         Button(
-            onClick = { viewModel.onAction(SampleUserAction.SubmitClicked) }
+            onClick = { onAction(SampleUserAction.SubmitClicked) }
         ) {
             Text("Submit")
         }
     }
 }
 ```
-
-**Key Points:**
-- Use `collectAsState()` for state observation
-- Use `LaunchedEffect` to collect events
-- Pass user actions via `viewModel.onAction()`
-- No business logic in Screen
 
 ## SampleViewModel.kt
 
@@ -159,6 +168,24 @@ Update state OR emit event
 Screen recomposes OR handles event
 ```
 
+## Usage in NavRoot
+
+Use the extension function in `NavRoot.kt`:
+
+```kotlin
+@Composable
+fun NavRoot() {
+    val navController = rememberNavController()
+    NavHost(
+        navController = navController,
+        startDestination = Route.Initial,
+    ) {
+        sampleScreen(navController)
+        // other screens...
+    }
+}
+```
+
 ## Registering with Koin
 
 Add to `feature/ViewModelModule.kt`:
@@ -172,11 +199,15 @@ val viewModelModule = module {
 ## Best Practices
 
 **DO:**
+- Keep Screen stateless (only receive state, events, onAction)
+- Use NavGraphBuilder extension to manage ViewModel
 - Use `onAction` pattern for all user interactions
 - Use Events for navigation, dialogs, snackbars
 - Keep state immutable
 - Handle loading and error states
 
 **DON'T:**
+- Pass ViewModel directly to Screen
 - Put business logic in Composables
 - Call repository directly from Screen
+- Store Events in StateFlow
