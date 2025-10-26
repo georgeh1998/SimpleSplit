@@ -12,4 +12,6 @@ This application allows users to manage group expenses.
 
 For detailed architecture documentation, see [docs/architecture.md](docs/architecture.md).
 
+For UI (Compose) and ViewModel implementation patterns, see [docs/ui-viewmodel-pattern.md](docs/ui-viewmodel-pattern.md).
+
 ### Testing

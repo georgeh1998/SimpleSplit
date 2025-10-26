@@ -33,13 +33,11 @@ The codebase is organized into distinct layers to ensure separation of concerns,
 
 The presentation layer contains UI components and state management logic, organized by feature.
 
-**Structure:**
-- Each feature has its own package (e.g., `initial`)
-- Each feature contains:
-  - `*Screen.kt`: Composable UI components
-  - `*ViewModel.kt`: State management and business logic orchestration
-  - `*UiState.kt`: UI state data classes
-  - Actions/Events: Sealed interfaces for user actions and navigation events
+**Responsibilities:**
+- Render UI using Jetpack Compose
+- Manage UI state with ViewModels
+- Handle user interactions through UserAction pattern
+- Handle one-shot UI events (navigation, dialogs, snackbars)
 
 **Key Technologies:**
 - Jetpack Compose for declarative UI
@@ -47,14 +45,7 @@ The presentation layer contains UI components and state management logic, organi
 - Kotlin StateFlow for reactive state
 - Type-safe Navigation with Compose Navigation
 
-**Example Structure:**
-```
-feature/
-  |-- initial/
-  |     |-- InitialScreen.kt
-  |     |-- InitialViewModel.kt
-  |     |-- InitialUiState.kt
-```
+**For detailed implementation patterns, see [docs/ui-viewmodel-pattern.md](ui-viewmodel-pattern.md).**
 
 ### 2. Domain Layer (`repository/`)
 
@@ -122,33 +113,6 @@ fun initKoin() = startKoin {
 }
 ```
 
-## State Management
-
-### Unidirectional Data Flow (UDF)
-
-The app follows a unidirectional data flow pattern:
-
-1. **User Action** -> ViewModel method call
-2. **ViewModel** -> Updates state or calls repository
-3. **Repository** -> Fetches/updates data via data layer
-4. **Data Layer** -> Communicates with backend
-5. **State Update** -> UI recomposes
-
-### State Flow Pattern
-
-```kotlin
-// ViewModel exposes StateFlow
-val uiState: StateFlow<UiState>
-
-// Repository exposes Flow
-val sessionStatus: Flow<SessionStatus>
-
-// ViewModel transforms and exposes as StateFlow
-val uiState = repository.sessionStatus
-    .map { /* transform */ }
-    .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), initialValue)
-```
-
 ## Navigation
 
 The app uses **Jetpack Compose Navigation** with type-safe routes defined as serializable sealed interfaces.
@@ -197,38 +161,6 @@ com.github.georgeh1998.simplesplit/
   |     |-- PrimaryButton.kt
   |-- util/                       # Utilities
         |-- Log.kt
-```
-
-## Data Flow Example
-
-Example: User sign-up flow
-
-```
-1. User enters email/password in SignUpScreen
-                |
-                v
-2. SignUpScreen calls viewModel.signUp(email, password)
-                |
-                v
-3. SignUpViewModel calls userRepository.signUpWithEmail(email, password)
-                |
-                v
-4. UserRepository calls supabaseService.signUpWith(email, password)
-                |
-                v
-5. SupabaseService makes API call to Supabase backend
-                |
-                v
-6. Response updates sessionStatus Flow
-                |
-                v
-7. ViewModel transforms sessionStatus to UiState
-                |
-                v
-8. Screen observes UiState and recomposes
-                |
-                v
-9. Navigation triggered based on new state
 ```
 
 ## Platform-Specific Implementation
